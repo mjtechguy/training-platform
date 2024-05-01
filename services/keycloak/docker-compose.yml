@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - keycloak_network
+
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KEYCLOAK_IMPORT: /tmp/realm.json
+    command:
+      - "-Dkeycloak.frontendUrl=https://5.161.110.136:8443/auth"
+      - "-Djavax.net.ssl.keyStore=/etc/x509/https/keycloak.jks"
+      - "-Djavax.net.ssl.keyStorePassword=changeit"
+      - "-Djavax.net.ssl.trustStore=/etc/x509/https/keycloak.jks"
+      - "-Djavax.net.ssl.trustStorePassword=changeit"
+    volumes:
+      - ./realm.json:/tmp/realm.json
+      - ./keycloak/certs:/etc/x509/https:rw
+    ports:
+      - "${KEYCLOAK_HTTP_PORT}:8080"
+      - "${KEYCLOAK_HTTPS_PORT}:8443"
+    depends_on:
+      - postgres
+    networks:
+      - keycloak_network
+
+volumes:
+  postgres_data:
+
+networks:
+  keycloak_network:
+    driver: bridge

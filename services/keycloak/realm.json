@@ -1,0 +1,56 @@
+{
+  "id": "moodle",
+  "realm": "moodle",
+  "enabled": true,
+  "displayName": "Moodle Realm",
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": false,
+      "firstName": "admin",
+      "lastName": "User",
+      "email": "you@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "SomeSecurePassword",
+          "temporary": false
+        }
+      ],
+      "requiredActions": [],
+      "notBefore": 0,
+      "clientRoles": {
+        "realm-management": [
+          "manage-users"
+        ]
+      },
+      "realmRoles": [
+        "offline_access",
+        "uma_authorization"
+      ],
+      "groups": [],
+      "attributes": {}
+    }
+  ],
+  "groups": [],
+  "defaultRoles": ["offline_access", "uma_authorization"],
+  "requiredCredentials": ["password"],
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyInitialCounter": 0,
+  "otpPolicyDigits": 6,
+  "otpPolicyLookAheadWindow": 1,
+  "otpPolicyPeriod": 30,
+  "otpSupportedApplications": ["FreeOTP", "Google Authenticator"],
+  "webAuthnPolicyAcceptableAaguids": [],
+  "webAuthnPolicyAttestationConveyancePreference": "not specified",
+  "webAuthnPolicyAuthenticatorAttachment": "not specified",
+  "webAuthnPolicyAvoidSameAuthenticatorRegister": false,
+  "webAuthnPolicyCreateTimeout": 0,
+  "webAuthnPolicyRequireResidentKey": "not specified",
+  "webAuthnPolicyRpEntityName": "keycloak",
+  "webAuthnPolicyRpId": "",
+  "webAuthnPolicySignatureAlgorithms": ["ES256"],
+  "webAuthnPolicyUserVerificationRequirement": "not specified"
+}
